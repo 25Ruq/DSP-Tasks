@@ -7,10 +7,10 @@ def generate_verify():
     wave = generateWave()
     wavetype = var.get()
     if wavetype == "sin":
-        SignalSamplesAreEqual(r'C:\Users\hb\PycharmProjects\DSP_Task1\Signals\Sin_Cos\SinOutput.txt',
+        SignalSamplesAreEqual(r'C:\Users\Haneen Ibrahim\Documents\GitHub\DSP-Tasks\Task1\Signals\Sin_Cos\SinOutput.txt',
                               int(sfreqText.get("1.0", "end-1c")), wave)
     elif wavetype == "cos":
-        SignalSamplesAreEqual(r'C:\Users\hb\PycharmProjects\DSP_Task1\Signals\Sin_Cos\CosOutput.txt',
+        SignalSamplesAreEqual(r'C:\Users\Haneen Ibrahim\Documents\GitHub\DSP-Tasks\Task1\Signals\Sin_Cos\CosOutput.txt',
                               int(sfreqText.get("1.0", "end-1c")), wave)
 def generateWave():
     amp = int(ampText.get("1.0", "end-1c"))

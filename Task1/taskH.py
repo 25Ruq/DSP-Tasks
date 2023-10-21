@@ -1,8 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from tkinter import *
-
-file_path = r'C:\Users\hb\PycharmProjects\DSP_Task1\Signals/signal1.txt'
+import numpy as np
+import matplotlib as plt
+file_path = r'C:\Users\Haneen Ibrahim\Documents\GitHub\DSP-Tasks\Task1\Signals\signal1.txt'
 
 class sig:
 
