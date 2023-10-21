@@ -1,6 +1,6 @@
 from tkinter import *
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 file_path = r'C:\Users\Haneen Ibrahim\Documents\GitHub\DSP-Tasks\Task1\Signals\signal1.txt'
 
 class sig:
@@ -50,7 +50,7 @@ def main():
     root.geometry("250x170")
     Display = Button(root, height =10 ,width = 20, text ="Generate Wave",command = lambda:gui())
     Display.pack()
-    mainloop()
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
