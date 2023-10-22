@@ -35,14 +35,12 @@ def subtract_signals():
         # Perform element-wise subtraction of signals
         result_signal = np.zeros(min_length)
         for signal in signals:
-            result_signal =np.subtract(np.abs(result_signal), signal[:min_length])
+            result_signal =np.abs(np.subtract(np.abs(result_signal), signal[:min_length]))
 
         result_label.config(text="Subtract Result Signal: Ready")
         plot_signals(result_signal)
     else:
         result_label.config(text="Subtract Result Signal: Not enough signals")
-
-
 # Function to handle the "Calculate Result" button
 def calculate_result():
     if len(signals) > 1:
