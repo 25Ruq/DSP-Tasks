@@ -1,12 +1,13 @@
 from tkinter import *
 import numpy as np
 import matplotlib.pyplot as plt
-file_path = r'C:\Users\Haneen Ibrahim\Documents\GitHub\DSP-Tasks\Task1\Signals\signal1.txt'
+file_path = r'C:\Users\hb\PycharmProjects\DSP-Tasks\Task1\Signals\signal1.txt'
 
 class sig:
 
     def __init__(self):
         self.signal1 = None
+        self.indices = None
 
     def read_signal(self ,file_path):
 
@@ -15,7 +16,9 @@ class sig:
             # Assuming the file format as described
             count_samples = int(lines[2])
             signal_samples = [float(line.split()[1]) for line in lines[3:]]
+            signal_indices = [float(line.split()[0]) for line in lines[3:]]
             self.signal1 = np.array(signal_samples)
+            self.indices = np.array(signal_indices)
             print(f"{count_samples} samples have been successfully read and stored.")
 
     def display_continues_signal(self):
