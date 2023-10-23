@@ -12,8 +12,8 @@ def shift(shiftVal):
     obj.display_discrete_signal()
 
 
-def norm(selectedSignal_n,selectedRange):
-    path = r'C:\Users\hb\PycharmProjects\tempTasks\Task 2 + Files\input signals\\'
+def norm(selectedSignal_n, selectedRange):
+    path = r'C:\Users\hb\PycharmProjects\DSP-Tasks\Task2\Task 2 + Files\input signals\\'
     path += selectedSignal_n.get() + '.txt'
     new_min = None
     new_max = None
@@ -35,10 +35,10 @@ def norm(selectedSignal_n,selectedRange):
 
 
 def accumulate(selectedSignal_ac):
-    path = r'C:\Users\hb\PycharmProjects\tempTasks\Task 2 + Files\input signals\\'
+    path = r'C:\Users\hb\PycharmProjects\DSP-Tasks\Task2\Task 2 + Files\input signals\\'
     path += selectedSignal_ac.get() + '.txt'
     obj = sig()
-    obj.read_signal(r'C:\Users\hb\PycharmProjects\tempTasks\Task 2 + Files\input signals\Signal1.txt')
+    obj.read_signal(path)
     obj.display_continues_signal()
     obj.display_discrete_signal()
     for i in range(1, len(obj.signal1)):

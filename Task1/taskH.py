@@ -26,7 +26,7 @@ class sig:
             plt.title("Continues Signal")
             plt.xlabel("Time")
             plt.ylabel("Amplitude")
-            plt.plot(self.signal1, label='Signal 1')
+            plt.plot(self.indices, self.signal1, label='Signal 1')
             plt.legend()
             plt.show()
         else:
