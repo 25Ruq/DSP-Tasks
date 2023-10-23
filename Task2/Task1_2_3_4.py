@@ -61,6 +61,29 @@ def update_signals_list():
     for i, signal in enumerate(signals):
         signals_listbox.insert(tk.END, f"Signal {i + 1}: {signal}")
 
+def multiply_signal():
+    constant = int(constantText.get("1.0", "end-1c"))
+    if constant == -1:
+        result_signal = [x * -1 for x in signals[0] ] # Invert the signal
+    else:
+        result_signal = [x * constant for x in signals[0] ]
+
+    print(result_signal)
+    plot_signals(result_signal)
+
+def square_signal():
+    result_signal = result_signal = [x ** 2 for x in signals[0]]   # Square each element of the signal
+    print(result_signal)
+    plot_signals(result_signal)
+
+
+# Function to delete the selected item from the listbox
+def delete_item():
+    signals.clear()
+    selected_item_index = signals_listbox.curselection()
+    if selected_item_index:
+        signals_listbox.delete(selected_item_index)
+
 # Function to plot analog and digital signals
 def plot_signals(result_signal):
     plt.figure(figsize=(10, 6))
@@ -82,13 +105,15 @@ def plot_signals(result_signal):
 
 # Create the main root
 root = tk.Tk()
-root.geometry("350x320")
+root.geometry("400x400")
 root.title("Signal Operations")
 
 # Create and configure the listbox for displaying signals
 signals_listbox = tk.Listbox(root)
 signals_listbox.pack()
 
+constantText = tk.Text(root, height=2, width=20)
+constantText.pack()
 # Create "Add Signal" button
 add_signal_button = tk.Button(root, text="Add Signal", command=add_signal)
 add_signal_button.pack()
@@ -100,6 +125,18 @@ calculate_result_button.pack()
 # Create "Subtract Signals" button
 subtract_signals_button = tk.Button(root, text="Subtraction", command=subtract_signals)
 subtract_signals_button.pack()
+
+# Create "Multiplication Signals" button
+Multiplication_signals_button = tk.Button(root, text="Multiplication",command=multiply_signal)
+Multiplication_signals_button.pack()
+
+# Create "squaring Signals" button
+squaring_signals_button = tk.Button(root, text="squaring",command=square_signal)
+squaring_signals_button.pack()
+
+# Create a "Delete" button
+delete_button = tk.Button(root, text="Delete", command=delete_item)
+delete_button.pack()
 
 # Create a label for displaying the result signal
 result_label = tk.Label(root, text="Result Signal:")
