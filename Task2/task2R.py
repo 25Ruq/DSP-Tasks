@@ -1,13 +1,13 @@
 from Task1.taskH import *
+from Task1.Signals.Sin_Cos.comparesignals import SignalSamplesAreEqual
 
 def shift(shiftVal):
     obj = sig()
     obj.read_signal(r'C:\Users\hb\PycharmProjects\DSP-Tasks\Task2\Task 2 + Files\input signals\input shifting.txt')
     obj.display_continues_signal()
     obj.display_discrete_signal()
-    print(obj.indices)
-    obj.indices = obj.indices - int(shiftVal.get("1.0", "end-1c"))
-    print(obj.indices)
+    val = int(shiftVal.get("1.0", "end-1c"))
+    obj.indices = obj.indices - val
     obj.display_continues_signal()
     obj.display_discrete_signal()
 

@@ -34,7 +34,7 @@ class sig:
 
     def display_discrete_signal(self):
       if self.signal1 is not None:
-          plt.stem(self.signal1)
+          plt.stem(self.indices, self.signal1)
           plt.title("Discrete Signal")
           plt.xlabel("Sample")
           plt.ylabel("Amplitude")
