@@ -3,6 +3,7 @@ from tkinter import filedialog
 import matplotlib.pyplot as plt
 import numpy as np  # Added for subtraction
 
+
 # Create an empty list to store the signals
 signals = []
 
