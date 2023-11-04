@@ -1,7 +1,7 @@
 from Task1.signal import Signal
-from Task4.signalcompare import *
 from tkinter import END
 import numpy as np
+from Task4.signalcompare import *
 
 
 def euler(theta, p):
@@ -75,6 +75,10 @@ def transform(guiobj):
             transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, np.array(range(0, N, 1)), amplitude)
         transformed_signal.write_signal(output_file)
         transformed_signal.plot_signals(ff_list)
+        if test(guiobj.expected_signal, transformed_signal, op):
+            print("TEST PASSED")
+        else:
+            print("TEST FAILED")
         transformed_signal = Signal()
         transformed_signal.read_signal(output_file)
         guiobj.lst.append(transformed_signal)
@@ -97,3 +101,11 @@ def modify(N, index, amp, theta, amplitude, shift):
             print("Modification FAILED: Enter Amplitude or Phase Shift values, or empty index text box")
     else:
         print("Modification FAILED: Index must be between 0 and", N-1)
+
+
+def test(expected_signal, my_signal, op):
+    if op == "DFT":
+        return (SignalComapreAmplitude(my_signal.indices, expected_signal.indices)
+                and SignalComaprePhaseShift(my_signal.samples, my_signal.samples))
+    elif op == "IDFT":
+        return SignalComapreAmplitude(my_signal.samples, expected_signal.samples)

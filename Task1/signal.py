@@ -12,14 +12,14 @@ class Signal:
         self.indices = None
         self.samples = None
 
-    def read_signal(self, file_path):
+    def read_signal(self, file_path, switch=0):
         with open(file_path, 'r') as file:
             lines = file.read().splitlines()
             # Assuming the file format as described
             self.domain = int(lines[0])
             self.periodicity = int(lines[1])
             self.count = int(lines[2])
-            if self.domain == 0:
+            if self.domain == 0 or switch == 1:
                 self.indices = np.array([float(line.split()[0]) for line in lines[3:]])
                 self.samples = np.array([float(line.split()[1]) for line in lines[3:]])
             elif self.domain == 1:
