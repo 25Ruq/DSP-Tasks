@@ -64,10 +64,13 @@ def transform(guiobj):
         elif op == "IDFT":
             amplitude.reverse()
             transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, np.array(range(0, N, 1)), amplitude)
-        transformed_signal.write_signal(guiobj.outfile_text.get("1.0", "end-1c"))
+        output_file = guiobj.outfile_text.get("1.0", "end-1c")
+        transformed_signal.write_signal(output_file)
         transformed_signal.plot_signals(ff_list)
+        transformed_signal = Signal()
+        transformed_signal.read_signal(output_file)
         guiobj.lst.append(transformed_signal)
-        guiobj.signals_listbox.insert(END, guiobj.outfile_text.get("1.0", "end-1c"))
+        guiobj.signals_listbox.insert(END, output_file)
     else:
         print("Too many signals, please keep one signal to transform")
 
