@@ -11,6 +11,13 @@ def euler(theta, p):
 
 def transform(guiobj):
     if len(guiobj.lst) == 1:
+        if guiobj.expected_signal is None:
+            print("Select Expected Output File")
+            return
+        output_file = guiobj.outfile_text.get("1.0", "end-1c")
+        if output_file == "":
+            print("Enter Output File Name")
+            return
         sig = guiobj.lst[0]
         op = guiobj.transformation_var.get()
         if op == "DFT" and sig.domain == 0:
@@ -66,16 +73,12 @@ def transform(guiobj):
         elif op == "IDFT":
             amplitude.reverse()
             transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, np.array(range(0, N, 1)), amplitude)
-        try:
-            output_file = guiobj.outfile_text.get("1.0", "end-1c")
-            transformed_signal.write_signal(output_file)
-            transformed_signal.plot_signals(ff_list)
-            transformed_signal = Signal()
-            transformed_signal.read_signal(output_file)
-            guiobj.lst.append(transformed_signal)
-            guiobj.signals_listbox.insert(END, output_file)
-        except FileNotFoundError:
-            print("Enter output file Name")
+        transformed_signal.write_signal(output_file)
+        transformed_signal.plot_signals(ff_list)
+        transformed_signal = Signal()
+        transformed_signal.read_signal(output_file)
+        guiobj.lst.append(transformed_signal)
+        guiobj.signals_listbox.insert(END, output_file)
     elif len(guiobj.lst) > 1:
         print("Too many signals, please keep one signal to transform")
     else:
