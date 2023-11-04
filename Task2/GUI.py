@@ -1,50 +1,74 @@
 from tkinter import *
-from task2R import shift, norm, accumulate
+from helper import select_signal, remove_signal
+from Task2.operations import *
 
 
-root = Tk()
-canvas = Canvas(root, width=400, height=300)
-canvas.pack()
-signals = [
-    "Signal1",
-    "Signal2",
-    "signal3"
-]
+class Operations:
+    def __init__(self):
+        self.lst = []
+        self.root = Tk()
+        self.root.geometry("400x400")
 
-# 5
-shiftVal = Text(root, height=2, width=15)
-canvas.create_window(75, 100, window=shiftVal)
-shiftButton = Button(root, text="Shift", command=lambda: shift(shiftVal))
-shiftButton.config(width=10)
-canvas.create_window(200, 100, window=shiftButton)
+        # Create and configure the listbox for displaying signals
+        self.signals_listbox = Listbox(self.root)
+        self.signals_listbox.grid(row=0, column=1)
 
-# 6
-ranges = [
-    "[0,1]",
-    "[-1,1]"
-]
-selectedSignal_n = StringVar()
-selectedSignal_n.set("Select Signal")
-selectedRange = StringVar()
-selectedRange.set("Select Range")
-SignalMenu_n = OptionMenu(root, selectedSignal_n, *signals)
-SignalMenu_n.config(width=10)
-canvas.create_window(75, 150, window=SignalMenu_n)
-rangeMenu = OptionMenu(root, selectedRange, *ranges)
-rangeMenu.config(width=15)
-canvas.create_window(200, 150, window=rangeMenu)
-normButton = Button(root, text="Normalize", command=lambda: norm(selectedSignal_n,selectedRange))
-normButton.config(width=10)
-canvas.create_window(325, 150, window=normButton)
+        # Create "Add Signal" button
+        self.select_signal_button = Button(self.root, text="Select Signal", command=lambda: select_signal(self))
+        self.select_signal_button.grid(row=1, column=0)
 
-# 7
-selectedSignal_ac = StringVar()
-selectedSignal_ac.set("Select Signal")
-SignalMenu_ac = OptionMenu(root, selectedSignal_ac, *signals)
-SignalMenu_ac.config(width=10)
-canvas.create_window(75, 200, window=SignalMenu_ac)
-accumulateButton = Button(root, text="Accumulate", command=lambda: accumulate(selectedSignal_ac))
-accumulateButton.config(width=10)
-canvas.create_window(200, 200, window=accumulateButton)
+        # Create a "Delete" button
+        self.remove_signal_button = Button(self.root, text="Remove Signal", command=lambda: remove_signal(self))
+        self.remove_signal_button.grid(row=1, column=1)
 
-mainloop()
+        # Create "Add" button
+        self.add_button = Button(self.root, text="Add", command=lambda: calculate_result(self))
+        self.add_button.grid(row=2, column=0)
+
+        # Create "Subtract" button
+        self.subtract_button = Button(self.root, text="Subtract", command=lambda: subtract_signals(self))
+        self.subtract_button.grid(row=2, column=1)
+
+        # Create "Multiply" button
+        self.multiply_button = Button(self.root, text="Multiply", command=lambda: multiply_signal(self))
+        self.multiply_button.grid(row=3, column=0)
+
+        self.constantText = Text(self.root, height=2, width=20)
+        self.constantText.grid(row=3, column=1)
+
+        # Create "Square" button
+        self.square_button = Button(self.root, text="Square", command=lambda: square_signal(self))
+        self.square_button.grid(row=4, column=1)
+
+        # Create a label for displaying the result signal
+        self.result_label = Label(self.root, text="Result Signal:")
+        self.result_label.grid(row=8, column=0)
+
+
+        # 5
+        self.shift_value = Text(self.root, height=2, width=15)
+        self.shift_value.grid(row=5, column=0)
+        self.shift_button = Button(self.root, text="Shift", command=lambda: shift(self))
+        self.shift_button.config(width=10)
+        self.shift_button.grid(row=5, column=1)
+
+        # 6
+        ranges = [
+            "[0,1]",
+            "[-1,1]"
+        ]
+        self.selected_range = StringVar(self.root)
+        self.selected_range.set("Select Range")
+        self.range_menu = OptionMenu(self.root, self.selected_range, *ranges)
+        self.range_menu.config(width=15)
+        self.range_menu.grid(row=6, column=1)
+        self.normalize_button = Button(self.root, text="Normalize", command=lambda: norm(self))
+        self.normalize_button.config(width=10)
+        self.normalize_button.grid(row=6, column=0)
+
+        # 7
+        self.accumulate_button = Button(self.root, text="Accumulate", command=lambda: accumulate(self))
+        self.accumulate_button.config(width=10)
+        self.accumulate_button.grid(row=7, column=0)
+
+        mainloop()
