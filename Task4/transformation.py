@@ -1,4 +1,3 @@
-import math
 from Task1.signal import Signal
 from Task4.signalcompare import *
 from tkinter import END
@@ -13,7 +12,6 @@ def euler(theta, p):
 def transform(guiobj):
     if len(guiobj.lst) == 1:
         sig = guiobj.lst[0]
-        p = None
         op = guiobj.transformation_var.get()
         if op == "DFT" and sig.domain == 0:
             p = complex(0, -1)
@@ -45,41 +43,54 @@ def transform(guiobj):
                     xk += x
             if op == "IDFT":
                 xk /= N
-                amplitude.append(round(xk.real, 14))
+                amplitude.append(xk.real)
             else:
-                amplitude.append(round(math.sqrt((xk.real ** 2) + (xk.imag ** 2)), 14))
+                amplitude.append(math.sqrt((xk.real ** 2) + (xk.imag ** 2)))
                 shift.append(math.degrees(math.atan(xk.imag / xk.real)))
                 ff_list.append(ff*(k+1))
         transformed_signal = Signal()
         if op == "DFT":
             try:
                 index = int(guiobj.indexText.get("1.0", "end-1c"))
-                amp = int(guiobj.ampText.get("1.0", "end-1c"))
-                theta = int(guiobj.thetaText.get("1.0", "end-1c"))
-                if modify(N, index, amp, theta, amplitude, shift) == 0:
-                    return
+                amp = None
+                theta = None
+                try:
+                    amp = int(guiobj.ampText.get("1.0", "end-1c"))
+                    theta = int(guiobj.thetaText.get("1.0", "end-1c"))
+                except ValueError:
+                    pass
+                modify(N, index, amp, theta, amplitude, shift)
             except ValueError:
                 pass
             transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, amplitude, shift)
         elif op == "IDFT":
             amplitude.reverse()
             transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, np.array(range(0, N, 1)), amplitude)
-        output_file = guiobj.outfile_text.get("1.0", "end-1c")
-        transformed_signal.write_signal(output_file)
-        transformed_signal.plot_signals(ff_list)
-        transformed_signal = Signal()
-        transformed_signal.read_signal(output_file)
-        guiobj.lst.append(transformed_signal)
-        guiobj.signals_listbox.insert(END, output_file)
-    else:
+        try:
+            output_file = guiobj.outfile_text.get("1.0", "end-1c")
+            transformed_signal.write_signal(output_file)
+            transformed_signal.plot_signals(ff_list)
+            transformed_signal = Signal()
+            transformed_signal.read_signal(output_file)
+            guiobj.lst.append(transformed_signal)
+            guiobj.signals_listbox.insert(END, output_file)
+        except FileNotFoundError:
+            print("Enter output file Name")
+    elif len(guiobj.lst) > 1:
         print("Too many signals, please keep one signal to transform")
+    else:
+        print("No signal selected, please select one signal to transform")
 
 
 def modify(N, index, amp, theta, amplitude, shift):
     if index >= 0 and index < N:
-        amplitude[index] = amp
-        shift[index] = theta
-        return 1
+        if amp is not None:
+            amplitude[index] = amp
+            print("Modification Succeeded: Amplitude of component", index, "is now", amp)
+        if theta is not None:
+            shift[index] = theta
+            print("Modification Succeeded: Phase Shift of component", index, "is now", theta)
+        if amp is None and theta is None:
+            print("Modification FAILED: Enter Amplitude or Phase Shift values, or empty index text box")
     else:
-        print("Modification FAILED : Index must be between 0 and", N-1)
-        return 0
+        print("Modification FAILED: Index must be between 0 and", N-1)

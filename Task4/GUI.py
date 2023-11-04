@@ -31,13 +31,14 @@ class Transformation:
         self.idft = Radiobutton(self.root, text="IDFT", variable=self.transformation_var, value="IDFT")
         self.dft.grid(row=3, column=0)
         self.idft.grid(row=3, column=1)
+        self.transformation_var.set("DFT")
 
         self.sampling_freq_label = Label(self.root, text="Sampling Frequency:")
         self.sampling_freq_text = Text(self.root, height=2, width=20)
         self.sampling_freq_label.grid(row=4, column=0)
         self.sampling_freq_text.grid(row=4, column=1)
 
-        self.optional_label = Label(self.root, text="Optional Input:")
+        self.optional_label = Label(self.root, text="Optional Input DFT:")
         self.optional_label.grid(row=5, column=0)
         labels = ["Index:", "Amplitude:", "phase shift:"]
         for i, label_text in enumerate(labels):
