@@ -62,8 +62,8 @@ def transform(guiobj):
                 amp = None
                 theta = None
                 try:
-                    amp = int(guiobj.ampText.get("1.0", "end-1c"))
-                    theta = int(guiobj.thetaText.get("1.0", "end-1c"))
+                    amp = float(guiobj.ampText.get("1.0", "end-1c"))
+                    theta = float(guiobj.thetaText.get("1.0", "end-1c"))
                 except ValueError:
                     pass
                 modify(N, index, amp, theta, amplitude, shift)
