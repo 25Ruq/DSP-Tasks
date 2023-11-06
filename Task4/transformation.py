@@ -6,7 +6,7 @@ from Task4.signalcompare import *
 
 def euler(theta, p):
     theta = round(math.radians(theta), 3)
-    return complex(round(math.cos(theta), 3) + p * round(math.sin(theta), 3))
+    return complex(math.cos(theta) + p * math.sin(theta))
 
 
 def transform(guiobj):
@@ -27,18 +27,19 @@ def transform(guiobj):
         else:
             print("Signal type is incompatible with the operation")
             return
+        amplitude = []
+        shift = []
+        ff_list = []
+        N = sig.count
         try:
-            ff = 2 * (22/7) * float(guiobj.sampling_freq_text.get("1.0", "end-1c")) / 4
+            ff = 2 * (22/7) * float(guiobj.sampling_freq_text.get("1.0", "end-1c")) / N
         except ValueError:
             if op == "IDFT":
                 ff = None
             else:
                 print("Please Enter Sampling Frequency or change to IDFT")
                 return
-        amplitude = []
-        shift = []
-        ff_list = []
-        N = sig.count
+
         for k in range(N):
             xk = complex(0, 0)
             for n in range(N):
@@ -53,7 +54,7 @@ def transform(guiobj):
                 amplitude.append(xk.real)
             else:
                 amplitude.append(math.sqrt((xk.real ** 2) + (xk.imag ** 2)))
-                shift.append(math.atan(xk.imag / xk.real))
+                shift.append(np.angle(xk))
                 ff_list.append(ff*(k+1))
         transformed_signal = Signal()
         if op == "DFT":
@@ -71,7 +72,6 @@ def transform(guiobj):
                 pass
             transformed_signal.store_signal(sig.periodicity, 1 ^ int(sig.domain), N, amplitude, shift)
         elif op == "IDFT":
-            amplitude.reverse()
             transformed_signal.store_signal(sig.periodicity, 1 ^ int(sig.domain), N, np.array(range(0, N, 1)), amplitude)
         transformed_signal.write_signal(output_file)
         transformed_signal.plot_signals(ff_list)
