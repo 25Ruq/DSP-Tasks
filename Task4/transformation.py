@@ -53,7 +53,7 @@ def transform(guiobj):
                 amplitude.append(xk.real)
             else:
                 amplitude.append(math.sqrt((xk.real ** 2) + (xk.imag ** 2)))
-                shift.append(math.degrees(math.atan(xk.imag / xk.real)))
+                shift.append(math.atan(xk.imag / xk.real))
                 ff_list.append(ff*(k+1))
         transformed_signal = Signal()
         if op == "DFT":
@@ -69,10 +69,10 @@ def transform(guiobj):
                 modify(N, index, amp, theta, amplitude, shift)
             except ValueError:
                 pass
-            transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, amplitude, shift)
+            transformed_signal.store_signal(sig.periodicity, 1 ^ int(sig.domain), N, amplitude, shift)
         elif op == "IDFT":
             amplitude.reverse()
-            transformed_signal.store_signal(1 ^ int(sig.domain), sig.periodicity, N, np.array(range(0, N, 1)), amplitude)
+            transformed_signal.store_signal(sig.periodicity, 1 ^ int(sig.domain), N, np.array(range(0, N, 1)), amplitude)
         transformed_signal.write_signal(output_file)
         transformed_signal.plot_signals(ff_list)
         if test(guiobj.expected_signal, transformed_signal, op):
