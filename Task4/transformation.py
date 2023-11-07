@@ -5,7 +5,7 @@ from Task4.signalcompare import *
 
 
 def euler(theta, p):
-    theta = round(math.radians(theta), 3)
+    theta = math.radians(theta)
     return complex(math.cos(theta) + p * math.sin(theta))
 
 
@@ -53,6 +53,7 @@ def transform(guiobj):
                 xk /= N
                 amplitude.append(xk.real)
             else:
+                # amplitude.append(np.round(math.sqrt((xk.real ** 2) + (xk.imag ** 2)), 13))
                 amplitude.append(math.sqrt((xk.real ** 2) + (xk.imag ** 2)))
                 shift.append(np.angle(xk))
                 ff_list.append(ff*(k+1))
