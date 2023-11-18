@@ -20,12 +20,18 @@ def select_signal(guiobj, num=0):
             obj = Signal()
             obj.read_signal(file_path)
             obj.plot_signals()
+            try:
+                guiobj.lst.pop()
+                guiobj.signals_listbox.delete(0, END)
+            except IndexError:
+                pass
             guiobj.lst.append(obj)
             guiobj.signals_listbox.insert(END, os.path.basename(file_path))
         else:
             obj = Signal()
             obj.read_signal(file_path, 1)
             obj.plot_signals()
+            guiobj.outfile_name = file_path
             guiobj.expected_signal = obj
             guiobj.expected_signals_listbox.delete(0, END)
             guiobj.expected_signals_listbox.insert(END, os.path.basename(file_path))

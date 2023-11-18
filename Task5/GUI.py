@@ -1,9 +1,9 @@
 from tkinter import *
-from Task4.transformation import transform
 from helper import select_signal, remove_signal
+from Task5.funtions import *
 
+class Components:
 
-class Transformation:
     def __init__(self):
         self.expected_signal = None
         self.outfile_name = None
@@ -42,33 +42,15 @@ class Transformation:
         self.remove_output_button.config(width=25)
         self.remove_output_button.grid(row=4, column=1)
 
+        self.DCT_button = Button(self.root, text="DCT", command=lambda: DCT(self))
+        self.DCT_button.config(width=25)
+        self.DCT_button.grid(row=11, column=0)
+
+        self.remove_dc_button = Button(self.root, text="Remove DC", command=lambda: remove_DC(self))
+        self.remove_dc_button.config(width=25)
+        self.remove_dc_button.grid(row=11, column=1)
+
         self.transformation_var = StringVar(self.root)
-        self.dft = Radiobutton(self.root, text="DFT", variable=self.transformation_var, value="DFT")
-        self.idft = Radiobutton(self.root, text="IDFT", variable=self.transformation_var, value="IDFT")
-        self.dft.grid(row=5, column=0)
-        self.idft.grid(row=5, column=1)
         self.transformation_var.set("DFT")
-
-        self.sampling_freq_label = Label(self.root, text="Sampling Frequency:")
-        self.sampling_freq_text = Text(self.root, height=2, width=20)
-        self.sampling_freq_label.grid(row=6, column=0)
-        self.sampling_freq_text.grid(row=6, column=1)
-
-        self.optional_label = Label(self.root, text="Optional Input IDFT:")
-        self.optional_label.grid(row=7, column=0)
-        labels = ["Index:", "Amplitude:", "phase shift in Rad:"]
-        for i, label_text in enumerate(labels):
-            label = Label(self.root, text=label_text)
-            label.grid(row=i + 8, column=0)
-        self.indexText = Text(self.root, height=2, width=20)
-        self.ampText = Text(self.root, height=2, width=20)
-        self.thetaText = Text(self.root, height=2, width=20)
-        self.indexText.grid(row=8, column=1)
-        self.ampText.grid(row=9, column=1)
-        self.thetaText.grid(row=10, column=1)
-
-        self.transform_button = Button(self.root, text="Transform Signal", command=lambda: transform(self))
-        self.transform_button.config(width=25)
-        self.transform_button.grid(row=11, column=1)
 
         mainloop()

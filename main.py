@@ -3,6 +3,7 @@ from Task1.mainGUI import MainGUI
 from Task2.GUI import Operations
 from Task3.GUI import Quantization
 from Task4.GUI import Transformation
+from Task5.GUI import Components
 from helper import open_task
 
 root = Tk()
@@ -25,5 +26,9 @@ canvas.create_window(200, 150, window=Button3)
 Button4 = Button(root, text="Task 4", command=lambda: open_task(root, Transformation, "Task4"))
 Button4.config(width=10)
 canvas.create_window(200, 200, window=Button4)
+
+Button5 = Button(root, text="Task 5", command=lambda: open_task(root, Components, "Task5"))
+Button5.config(width=10)
+canvas.create_window(200, 250, window=Button5)
 
 mainloop()
