@@ -4,6 +4,7 @@ from Task2.GUI import Operations
 from Task3.GUI import Quantization
 from Task4.GUI import Transformation
 from Task5.GUI import Components
+from Task5 import *
 from helper import open_task
 
 root = Tk()
