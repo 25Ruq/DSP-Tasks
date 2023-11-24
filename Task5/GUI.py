@@ -46,6 +46,11 @@ class Components:
         self.DCT_button.config(width=25)
         self.DCT_button.grid(row=11, column=0)
 
+        self.num_label = Label(self.root, text="Enter # of Coefficient:")
+        self.num_text = Text(self.root, height=2, width=22)
+        self.num_label.grid(row=12, column=0)
+        self.num_text.grid(row=12, column=1)
+
         self.remove_dc_button = Button(self.root, text="Remove DC", command=lambda: remove_DC(self))
         self.remove_dc_button.config(width=25)
         self.remove_dc_button.grid(row=11, column=1)
