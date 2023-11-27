@@ -46,6 +46,16 @@ class Smoothing:
         self.smoothing_button.config(width=25)
         self.smoothing_button.grid(row=11, column=0)
 
+
+        self.fold_button = Button(self.root, text="Fold Signal", command=lambda: fold_signal(self))
+        self.fold_button.config(width=25)
+        self.fold_button.grid(row=13, column=0)
+
+        self.remove_dc_button = Button(self.root, text="Remove DC", command=lambda: remove_DC_avg(self))
+        self.remove_dc_button.config(width=25)
+        self.remove_dc_button.grid(row=11, column=1)
+
+
         self.num_label = Label(self.root, text="Enter Window size:")
         self.num_text = Text(self.root, height=2, width=22)
         self.num_label.grid(row=12, column=0)
