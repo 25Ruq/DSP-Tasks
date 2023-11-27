@@ -1,8 +1,8 @@
 from tkinter import *
 from helper import select_signal, remove_signal
-from Task5.funtions import *
+from Task6.Functions import *
 
-class Components:
+class Smoothing:
 
     def __init__(self):
         self.expected_signal = None
@@ -42,20 +42,13 @@ class Components:
         self.remove_output_button.config(width=25)
         self.remove_output_button.grid(row=4, column=1)
 
-        self.DCT_button = Button(self.root, text="DCT", command=lambda: DCT(self))
+        self.DCT_button = Button(self.root, text="smoothing", command=lambda: moving_average(self))
         self.DCT_button.config(width=25)
         self.DCT_button.grid(row=11, column=0)
 
-        self.num_label = Label(self.root, text="Enter # of Coefficient:")
+        self.num_label = Label(self.root, text="Enter Window size:")
         self.num_text = Text(self.root, height=2, width=22)
         self.num_label.grid(row=12, column=0)
         self.num_text.grid(row=12, column=1)
-
-        self.remove_dc_button = Button(self.root, text="Remove DC", command=lambda: remove_DC(self))
-        self.remove_dc_button.config(width=25)
-        self.remove_dc_button.grid(row=11, column=1)
-
-        self.transformation_var = StringVar(self.root)
-        self.transformation_var.set("DFT")
 
         mainloop()
