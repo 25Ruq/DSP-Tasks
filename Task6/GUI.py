@@ -42,13 +42,26 @@ class Smoothing:
         self.remove_output_button.config(width=25)
         self.remove_output_button.grid(row=4, column=1)
 
-        self.DCT_button = Button(self.root, text="smoothing", command=lambda: moving_average(self))
-        self.DCT_button.config(width=25)
-        self.DCT_button.grid(row=11, column=0)
+        self.smoothing_button = Button(self.root, text="smoothing", command=lambda: moving_average(self))
+        self.smoothing_button.config(width=25)
+        self.smoothing_button.grid(row=11, column=0)
 
         self.num_label = Label(self.root, text="Enter Window size:")
         self.num_text = Text(self.root, height=2, width=22)
         self.num_label.grid(row=12, column=0)
         self.num_text.grid(row=12, column=1)
+
+        self.num_label = Label(self.root, text="Enter K:")
+        self.num_text = Text(self.root, height=2, width=22)
+        self.num_label.grid(row=13, column=0)
+        self.num_text.grid(row=13, column=1)
+
+        self.delay_button = Button(self.root, text="Delay", command=lambda: delay_signal(self))
+        self.delay_button.config(width=25)
+        self.delay_button.grid(row=14, column=0)
+
+        self.advance_button = Button(self.root, text="Advance", command=lambda: advance_signal(self))
+        self.advance_button.config(width=25)
+        self.advance_button.grid(row=14, column=1)
 
         mainloop()
