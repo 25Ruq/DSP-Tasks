@@ -63,15 +63,12 @@ class Smoothing:
 
         self.num_label = Label(self.root, text="Enter K:")
         self.num_text = Text(self.root, height=2, width=22)
-        self.num_label.grid(row=13, column=0)
-        self.num_text.grid(row=13, column=1)
+        self.num_label.grid(row=14, column=0)
+        self.num_text.grid(row=14, column=1)
 
-        self.delay_button = Button(self.root, text="Delay", command=lambda: delay_signal(self))
+        self.delay_button = Button(self.root, text="shift signal", command=lambda: shift_signal(self))
         self.delay_button.config(width=25)
-        self.delay_button.grid(row=14, column=0)
+        self.delay_button.grid(row=15, column=0)
 
-        self.advance_button = Button(self.root, text="Advance", command=lambda: advance_signal(self))
-        self.advance_button.config(width=25)
-        self.advance_button.grid(row=14, column=1)
 
         mainloop()
