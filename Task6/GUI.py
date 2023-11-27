@@ -46,7 +46,6 @@ class Smoothing:
         self.smoothing_button.config(width=25)
         self.smoothing_button.grid(row=11, column=0)
 
-
         self.fold_button = Button(self.root, text="Fold Signal", command=lambda: fold_signal(self))
         self.fold_button.config(width=25)
         self.fold_button.grid(row=13, column=0)
@@ -55,6 +54,9 @@ class Smoothing:
         self.remove_dc_button.config(width=25)
         self.remove_dc_button.grid(row=11, column=1)
 
+        self.fold_shift_button = Button(self.root, text="Fold and shift", command=lambda: fold_shift(self))
+        self.fold_shift_button.config(width=25)
+        self.fold_shift_button.grid(row=15, column=1)
 
         self.num_label = Label(self.root, text="Enter Window size:")
         self.num_text = Text(self.root, height=2, width=22)

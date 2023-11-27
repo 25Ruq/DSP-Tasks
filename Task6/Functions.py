@@ -1,6 +1,7 @@
 from Task5.comparesignal2 import *
 import numpy as np
 from Task6.Shift_Fold_Signal import Shift_Fold_Signal
+from tkinter import END
 
 def moving_average(guiobj):
     if len(guiobj.lst) == 1:
@@ -28,18 +29,19 @@ def moving_average(guiobj):
 def shift_signal(guiobj):
     sig = guiobj.lst[0]
     signal_values = sig.samples
+    signal_indices = sig.indices
     k = int(guiobj.num_text.get("1.0", "end-1c"))
 
     if k > 0:  # Advance signal
-        shifted_indices = [i + k for i in range(len(signal_values))]
-        shifted_values = [signal_values[i] if i < len(signal_values) else 0 for i in shifted_indices]
+        shifted_indices = [i - k for i in signal_indices]
         print("Advanced Signal Indices:", shifted_indices)
-        print("Advanced Signal Values:", shifted_values)
+        print("Advanced Signal Values:", guiobj.lst[0].samples)
+        guiobj.lst[0].indices = shifted_indices
     elif k < 0:  # Delay signal
-        shifted_indices = [i - abs(k) for i in range(len(signal_values))]
-        shifted_values = [signal_values[i] if i >= 0 else 0 for i in shifted_indices]
+        shifted_indices = [i + abs(k) for i in signal_indices]
         print("Delayed Signal Indices:", shifted_indices)
-        print("Delayed Signal Values:", shifted_values)
+        print("Delayed Signal Values:", guiobj.lst[0].samples)
+        guiobj.lst[0].indices = shifted_indices
     else:  # No shift (k = 0)
         print("No shift applied. Original Signal:", signal_values)
 
@@ -59,7 +61,7 @@ def remove_DC_avg(guiobj):
         SignalSamplesAreEqual(guiobj.outfile_name, guiobj.lst[0].samples)
 
 
-def fold_signal(guiobj):
+def fold_signal(guiobj, num=1):
     if len(guiobj.lst) == 1:
         if guiobj.expected_signal is None:
             print("Select Expected Output File")
@@ -70,11 +72,8 @@ def fold_signal(guiobj):
             return
         guiobj.lst[0].samples = guiobj.lst[0].samples[::-1]
         guiobj.lst[0].write_signal(output_file)
-        Shift_Fold_Signal(guiobj.outfile_name, guiobj.lst[0].indices, guiobj.lst[0].samples)
-
-
-def shift():
-    pass
+        if num == 1:
+            Shift_Fold_Signal(guiobj.outfile_name, guiobj.lst[0].indices, guiobj.lst[0].samples)
 
 
 def fold_shift(guiobj):
@@ -86,9 +85,9 @@ def fold_shift(guiobj):
         if output_file == "":
             print("Enter Output File Name")
             return
-        fold_signal(guiobj)
-        # multiply value of const by -1
-        shift(guiobj)
+        fold_signal(guiobj, 0)
+        k = int(guiobj.num_text.get("1.0", "end-1c"))*-1
+        guiobj.num_text.delete(1.0, END)
+        guiobj.num_text.insert(END, k)
+        shift_signal(guiobj)
         Shift_Fold_Signal(guiobj.outfile_name, guiobj.lst[0].indices, guiobj.lst[0].samples)
-
-
