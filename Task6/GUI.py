@@ -1,6 +1,7 @@
 from tkinter import *
 from helper import select_signal, remove_signal
 from Task6.Functions import *
+from Task6.Drivative import *
 
 class Smoothing:
 
@@ -72,5 +73,8 @@ class Smoothing:
         self.delay_button.config(width=25)
         self.delay_button.grid(row=15, column=0)
 
+        self.Derivative_button = Button(self.root, text="Derivative", command=lambda: DerivativeSignal())
+        self.Derivative_button.config(width=25)
+        self.Derivative_button.grid(row=16, column=1)
 
         mainloop()
