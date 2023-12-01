@@ -5,6 +5,7 @@ from Task3.GUI import Quantization
 from Task4.GUI import Transformation
 from Task5.GUI import Components
 from Task6.GUI import Smoothing
+from Task7.GUI import Convlov
 from Task5 import *
 from helper import open_task
 
@@ -36,4 +37,8 @@ canvas.create_window(200, 250, window=Button5)
 Button6 = Button(root, text="Task 6", command=lambda: open_task(root, Smoothing, "Task6"))
 Button6.config(width=10)
 canvas.create_window(200, 300, window=Button6)
+
+Button6 = Button(root, text="Task 7", command=lambda: open_task(root, Convlov, "Task7"))
+Button6.config(width=10)
+canvas.create_window(200, 350, window=Button6)
 mainloop()
