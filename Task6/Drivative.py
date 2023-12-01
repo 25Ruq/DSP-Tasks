@@ -23,10 +23,15 @@ def DerivativeSignal():
     Start
     """
 
-    FirstDrev = [InputSignal[i] - InputSignal[i - 1] if i > 0 else InputSignal[i] for i in range(len(InputSignal))]
+    FirstDrev=[]
+    SecondDrev=[]
+    for i in range(len(InputSignal)):
+       if i >0:
+          FirstDrev.append(InputSignal[i] - InputSignal[i - 1])
 
-    SecondDrev = [InputSignal[i + 1] - 2 * InputSignal[i] + InputSignal[i - 1] if i > 0 and i < len(InputSignal) - 1 else 0 for i in range(len(InputSignal))]
-
+    for i in range(len(InputSignal)):
+        if i > 0 and i < len(InputSignal) - 1 :
+            SecondDrev.append( InputSignal[i + 1] - 2 * InputSignal[i] + InputSignal[i - 1])
     """
     End
     """
@@ -38,9 +43,9 @@ def DerivativeSignal():
     print(len(expectedOutput_first))
     print(len(SecondDrev))
     print(len(expectedOutput_second))
-    # if (len(FirstDrev) != len(expectedOutput_first)) or (len(SecondDrev) != len(expectedOutput_second)):
-    #     print("mismatch in length")
-    #     return
+    if (len(FirstDrev) != len(expectedOutput_first)) or (len(SecondDrev) != len(expectedOutput_second)):
+        print("mismatch in length")
+        return
     first = second = True
     for i in range(len(expectedOutput_first)):
         if abs(FirstDrev[i] - expectedOutput_first[i]) < 0.01:
@@ -61,4 +66,3 @@ def DerivativeSignal():
     else:
         print("Derivative Test case failed")
     return
-DerivativeSignal()
