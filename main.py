@@ -6,11 +6,11 @@ from Task4.GUI import Transformation
 from Task5.GUI import Components
 from Task6.GUI import Smoothing
 from Task7.GUI import Convlov
-from Task5 import *
+from Task8.GUI import Correlation
 from helper import open_task
 
 root = Tk()
-canvas = Canvas(root, width=400, height=400)
+canvas = Canvas(root, width=400, height=450)
 canvas.pack()
 
 Button1 = Button(root, text="Task 1", command=lambda: open_task(root, MainGUI, "Task1"))
@@ -38,7 +38,11 @@ Button6 = Button(root, text="Task 6", command=lambda: open_task(root, Smoothing,
 Button6.config(width=10)
 canvas.create_window(200, 300, window=Button6)
 
-Button6 = Button(root, text="Task 7", command=lambda: open_task(root, Convlov, "Task7"))
-Button6.config(width=10)
-canvas.create_window(200, 350, window=Button6)
+Button7 = Button(root, text="Task 7", command=lambda: open_task(root, Convlov, "Task7"))
+Button7.config(width=10)
+canvas.create_window(200, 350, window=Button7)
+
+Button8 = Button(root, text="Task 8", command=lambda: open_task(root, Correlation, "Task8"))
+Button8.config(width=10)
+canvas.create_window(200, 400, window=Button8)
 mainloop()
