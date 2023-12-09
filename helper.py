@@ -27,7 +27,7 @@ def select_signal(guiobj, num=0):
                 pass
             guiobj.lst.append(obj)
             guiobj.signals_listbox.insert(END, os.path.basename(file_path))
-        else:
+        elif num == 1:
             obj = Signal()
             obj.read_signal(file_path, 1)
             obj.plot_signals()
@@ -35,6 +35,12 @@ def select_signal(guiobj, num=0):
             guiobj.expected_signal = obj
             guiobj.expected_signals_listbox.delete(0, END)
             guiobj.expected_signals_listbox.insert(END, os.path.basename(file_path))
+        elif num == 2:
+            obj = Signal()
+            obj.read_signal(file_path)
+            obj.plot_signals()
+            guiobj.lst.append(obj)
+            guiobj.signals_listbox.insert(END, os.path.basename(file_path))
 
 
 def remove_signal(guiobj, num=0):
