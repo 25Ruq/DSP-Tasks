@@ -1,6 +1,7 @@
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 from tkinter import END
+from Task7.ConvTest import *
 import numpy as np
 
 
@@ -25,6 +26,7 @@ def convolve(guiobj):
         for k in range(len_h):
             y[n + k] += signal_values1[n] * signal_values2[k]
 
+    ConvTest(conv_indices,y)
     # Plotting the signals and convolution result
     plt.figure(figsize=(10, 5))
 
