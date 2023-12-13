@@ -6,52 +6,41 @@ import matplotlib.pyplot as plt
 class Signal:
 
     def __init__(self):
-        self.periodicity = None  # swapped
-        self.domain = None  # swapped
+        self.periodicity = None
+        self.domain = None
         self.count = None
         self.indices = None
         self.samples = None
 
-    def read_signal(self, file_path, switch=0):
+    def read_signal(self, file_path):
         with open(file_path, 'r') as file:
             lines = file.read().splitlines()
             # Assuming the file format as described
-            self.domain = int(lines[1])  # swapped
-            self.periodicity = int(lines[0])  # swapped
+            self.domain = int(lines[0])
+            self.periodicity = int(lines[1])
             self.count = int(lines[2])
-            if self.domain == 0 or switch == 1:
-                self.indices = np.array([float(line.split()[0]) for line in lines[3:]])
-                self.samples = np.array([float(line.split()[1]) for line in lines[3:]])
-            elif self.domain == 1:
-                self.indices = np.array(range(0, self.count, 1))
-                val = []
-                for line in lines[3:]:
-                    a = float(line.split()[0])
-                    theta = float(line.split()[1])
-                    x = complex(a * math.cos(theta), a * math.sin(theta))
-                    val.append(x)
-                self.samples = np.array(val)
-            print(f"{self.count} samples have been successfully read and stored.")
+            self.indices = np.array([float(line.split()[0]) for line in lines[3:]])
+            self.samples = np.array([float(line.split()[1]) for line in lines[3:]])
 
     def write_signal(self, filename):
         file = open(filename, "w")
-        file.write(f"{self.periodicity}\n")  # swapped
-        file.write(f"{self.domain}\n")  # swapped
+        file.write(f"{self.domain}\n")
+        file.write(f"{self.periodicity}\n")
         file.write(f"{self.count}\n")
         for i in range(self.count):
             file.write(f"{self.indices[i]} {self.samples[i]}\n")
         file.close()
 
-    def store_signal(self, periodicity, domain, count, indices, samples):  # swapped
-        self.periodicity = periodicity  # swapped
-        self.domain = domain  # swapped
+    def store_signal(self, domain, periodicity, count, indices, samples):
+        self.domain = domain
+        self.periodicity = periodicity
         self.count = count
         self.samples = samples
         self.indices = indices
 
     def display_signal(self):
-        print(self.periodicity, '\n')  # swapped
-        print(self.domain, '\n')  # swapped
+        print(self.domain, '\n')
+        print(self.periodicity, '\n')
         print(self.count, '\n')
         print(self.indices, '\n')
         print(self.samples, '\n')

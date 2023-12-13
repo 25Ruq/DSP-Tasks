@@ -1,9 +1,9 @@
 from tkinter import *
 from helper import select_signal, remove_signal
-from Task5.funtions import *
+from Task9.functions import *
 
-class Components:
 
+class Fast:
     def __init__(self):
         self.expected_signal = None
         self.outfile_name = None
@@ -16,7 +16,7 @@ class Components:
         self.input_label.grid(row=0, column=0)
         self.signals_listbox.grid(row=0, column=1)
 
-        self.select_input_button = Button(self.root, text="Select Input File", command=lambda: select_signal(self))
+        self.select_input_button = Button(self.root, text="Select Input File", command=lambda: select_signal(self, 2))
         self.select_input_button.config(width=25)
         self.select_input_button.grid(row=1, column=0)
 
@@ -42,17 +42,19 @@ class Components:
         self.remove_output_button.config(width=25)
         self.remove_output_button.grid(row=4, column=1)
 
-        self.DCT_button = Button(self.root, text="DCT", command=lambda: DCT(self))
-        self.DCT_button.config(width=25)
-        self.DCT_button.grid(row=11, column=0)
+        self.norm_option = IntVar(self.root)
+        self.norm_option.set(0)
+        self.normalized_corr = Radiobutton(self.root, text="Normalized", variable=self.norm_option, value=1)
+        self.normalized_corr.grid(row=5, column=0)
+        self.non_normalized_corr = Radiobutton(self.root, text="Non Normalized", variable=self.norm_option, value=0)
+        self.non_normalized_corr.grid(row=5, column=1)
 
-        self.num_label = Label(self.root, text="Enter # of Coefficient:")
-        self.num_text = Text(self.root, height=2, width=22)
-        self.num_label.grid(row=12, column=0)
-        self.num_text.grid(row=12, column=1)
+        self.corr_button = Button(self.root, text="Calculate Correlation", command=lambda: fast_correlation(self))
+        self.corr_button.config(width=25)
+        self.corr_button.grid(row=6, column=0)
 
-        self.remove_dc_button = Button(self.root, text="Remove DC", command=lambda: remove_DC(self))
-        self.remove_dc_button.config(width=25)
-        self.remove_dc_button.grid(row=11, column=1)
+        self.conv_button = Button(self.root, text="Calculate Correlation", command=lambda: fast_convloution(self))
+        self.conv_button.config(width=25)
+        self.conv_button.grid(row=6, column=1)
 
         mainloop()
