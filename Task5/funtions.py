@@ -1,4 +1,4 @@
-from Task4.transformation import modify, transform
+from Task4.transformation import modify, dft, idft
 from Task5.comparesignal2 import *
 import numpy as np
 
@@ -34,9 +34,8 @@ def DCT(guiobj):
 
 
 def remove_DC(guiobj):
-    transform(guiobj, 5)
-    modify(guiobj.lst[0].count, 0, 0, 0, guiobj.lst[0])
-    guiobj.transformation_var.set("IDFT")
-    transform(guiobj, 5)
-    guiobj.transformation_var.set("DFT")
-    SignalSamplesAreEqual(guiobj.outfile_name, guiobj.lst[0].samples)
+    transformed_signal = dft(guiobj.lst[0])
+    modify(transformed_signal.count, 0, 0, 0, transformed_signal)
+    transformed_signal = idft(transformed_signal)
+    transformed_signal.plot_signals()
+    SignalSamplesAreEqual(guiobj.outfile_name, transformed_signal.samples)

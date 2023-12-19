@@ -14,7 +14,7 @@ class Operations:
         self.signals_listbox.grid(row=0, column=1)
 
         # Create "Add Signal" button
-        self.select_signal_button = Button(self.root, text="Select Signal", command=lambda: select_signal(self))
+        self.select_signal_button = Button(self.root, text="Select Signal", command=lambda: select_signal(self, 2))
         self.select_signal_button.grid(row=1, column=0)
 
         # Create a "Delete" button

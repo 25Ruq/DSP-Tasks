@@ -1,6 +1,4 @@
-from tkinter import messagebox
 import matplotlib.pyplot as plt
-from tkinter import END
 from Task7.ConvTest import *
 import numpy as np
 

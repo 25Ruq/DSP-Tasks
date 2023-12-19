@@ -5,17 +5,6 @@ from Task8.CompareSignal import Compare_Signals
 
 
 def calculate_correlation(guiobj):
-    if guiobj.norm_option.get() == 0:
-        result_signal = calculate_correlation_non(guiobj)
-    else:
-        result_signal = calculate_correlation_norm(guiobj)
-
-    output_file = guiobj.outfile_text.get("1.0", "end-1c")
-    result_signal.write_signal(output_file)
-    Compare_Signals(guiobj.outfile_name, result_signal.indices, result_signal.samples)
-
-
-def calculate_correlation_norm(guiobj):
     if len(guiobj.lst) == 1:
         first_signal = second_signal = guiobj.lst[0]
     elif len(guiobj.lst) == 2:
@@ -24,6 +13,16 @@ def calculate_correlation_norm(guiobj):
     else:
         print("Only 1 or 2 signals are allowed")
         return
+    if guiobj.norm_option.get() == 0:
+        result_signal = calculate_correlation_non(first_signal, second_signal)
+    else:
+        result_signal = calculate_correlation_norm(first_signal, second_signal)
+    output_file = guiobj.outfile_text.get("1.0", "end-1c")
+    result_signal.write_signal(output_file)
+    Compare_Signals(guiobj.outfile_name, result_signal.indices, result_signal.samples)
+
+
+def calculate_correlation_norm(first_signal, second_signal):
     result = []
     count = first_signal.count
     squared_sum_1 = np.sum(first_signal.samples**2)
@@ -43,16 +42,7 @@ def calculate_correlation_norm(guiobj):
     return result_signal
 
 
-
-def calculate_correlation_non(guiobj):
-    if len(guiobj.lst) == 1:
-        first_signal = second_signal = guiobj.lst[0]
-    elif len(guiobj.lst) == 2:
-        first_signal = guiobj.lst[0]
-        second_signal = guiobj.lst[1]
-    else:
-        print("Only 1 or 2 signals are allowed")
-        return
+def calculate_correlation_non(first_signal, second_signal):
     result = []
     count = first_signal.count
     for i in range(count):

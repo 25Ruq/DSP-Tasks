@@ -7,10 +7,11 @@ from Task5.GUI import Components
 from Task6.GUI import Smoothing
 from Task7.GUI import Convlov
 from Task8.GUI import Correlation
+from Task9.GUI import Fast
 from helper import open_task
 
 root = Tk()
-canvas = Canvas(root, width=400, height=450)
+canvas = Canvas(root, width=400, height=500)
 canvas.pack()
 
 Button1 = Button(root, text="Task 1", command=lambda: open_task(root, MainGUI, "Task1"))
@@ -45,4 +46,9 @@ canvas.create_window(200, 350, window=Button7)
 Button8 = Button(root, text="Task 8", command=lambda: open_task(root, Correlation, "Task8"))
 Button8.config(width=10)
 canvas.create_window(200, 400, window=Button8)
+
+Button9 = Button(root, text="Task 9", command=lambda: open_task(root, Fast, "Task9"))
+Button9.config(width=10)
+canvas.create_window(200, 450, window=Button9)
+
 mainloop()

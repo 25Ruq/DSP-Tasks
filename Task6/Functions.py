@@ -27,13 +27,9 @@ def moving_average(guiobj):
     SignalSamplesAreEqual(guiobj.outfile_name, smoothed_signal)
 
 def shift_signal(guiobj):
-    sig = guiobj.lst[0]
-    signal_values = sig.samples
-    signal_indices = sig.indices
     k = int(guiobj.num_text.get("1.0", "end-1c"))
-    shifted_indices = [i + k for i in signal_indices]
-    guiobj.lst[0].indices = shifted_indices
-    print(shifted_indices)
+    guiobj.lst[0].indices -= k
+    print(guiobj.lst[0].indices)
 
 
 def remove_DC_avg(guiobj):
@@ -76,8 +72,8 @@ def fold_shift(guiobj):
             print("Enter Output File Name")
             return
         fold_signal(guiobj, 0)
-        #k = int(guiobj.num_text.get("1.0", "end-1c"))*-1
-        #guiobj.num_text.delete(1.0, END)
-        #guiobj.num_text.insert(END, k)
+        k = int(guiobj.num_text.get("1.0", "end-1c"))*-1
+        guiobj.num_text.delete(1.0, END)
+        guiobj.num_text.insert(END, k)
         shift_signal(guiobj)
         Shift_Fold_Signal(guiobj.outfile_name, guiobj.lst[0].indices, guiobj.lst[0].samples)
