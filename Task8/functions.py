@@ -1,5 +1,4 @@
 import math
-
 import numpy as np
 from Task1.signal import Signal
 from Task8.CompareSignal import Compare_Signals
