@@ -24,7 +24,7 @@ def convolve(guiobj):
         for k in range(len_h):
             y[n + k] += signal_values1[n] * signal_values2[k]
 
-    ConvTest(conv_indices,y)
+    ConvTest(conv_indices, y)
     # Plotting the signals and convolution result
     plt.figure(figsize=(10, 5))
 

@@ -1,17 +1,14 @@
 from Task1.signal import Signal
 import numpy as np
+from itertools import zip_longest
 
 
 def calculate_result(guiobj):
     signals = guiobj.lst
     if len(signals) > 1:
-        # Find the minimum length of signals
-        min_length = min(len(signal.samples) for signal in signals)
-
+        signals = [signal.samples for signal in signals]
         # Perform element-wise addition of signals
-        result_signal = np.zeros(min_length)
-        for signal in signals:
-            result_signal = np.abs(np.add(np.abs(result_signal), signal.samples[:min_length]))
+        result_signal = [sum(x) for x in zip_longest(*signals, fillvalue=0)]
 
         guiobj.result_label.config(text="Add Result Signal: Ready")
         obj = Signal()
@@ -24,13 +21,9 @@ def calculate_result(guiobj):
 def subtract_signals(guiobj):
     signals = guiobj.lst
     if len(signals) >= 2:
-        # Find the minimum length of signals
-        min_length = min(len(signal.samples) for signal in signals)
-
+        signals = [signal.samples for signal in signals]
         # Perform element-wise subtraction of signals
-        result_signal = np.zeros(min_length)
-        for signal in signals:
-            result_signal = np.abs(np.subtract(np.abs(result_signal), signal.samples[:min_length]))
+        result_signal = [x[0] - sum(x[1:]) for x in zip_longest(*signals, fillvalue=0)]
 
         guiobj.result_label.config(text="Subtract Result Signal: Ready")
         obj = Signal()

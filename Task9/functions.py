@@ -4,7 +4,7 @@ import math
 import cmath
 from Task1.signal import Signal
 from Task8.CompareSignal import Compare_Signals
-
+from Task7.ConvTest import *
 
 def fast_correlation(guiobj):
     if len(guiobj.lst) == 1:
@@ -53,28 +53,42 @@ def fast_convolution(guiobj):
     N1 = sig1.count
     N2 = sig2.count
     M = N1+N2-1
-
+    conv_indices = np.arange(M) + sig1.indices[0] + sig2.indices[0]
     # Append zeros to both signals
-    sig1.samples = np.append(sig1.samples , np.zeros(M - N1))
-    sig2.samples = np.append(sig2.samples , np.zeros(M - N2))
+    last_index1 = int(sig1.indices[-1]+1)
+    last_index2 = int(sig2.indices[-1]+1)
+    sig1.indices = np.append(sig1.indices, np.array(range(last_index1, M-last_index1, 1)))
+    sig2.indices = np.append(sig2.indices, np.array(range(last_index2, M, 1)))
+    sig1.count = M
+    sig2.count = M
+    sig1.samples = np.append(sig1.samples, np.zeros(M - N1))
+    sig2.samples = np.append(sig2.samples, np.zeros(M - N2))
 
     # Perform DFT on both signals
     signal1_dft = dft(sig1)
     signal2_dft = dft(sig2)
 
+    complex_first_signal = np.zeros(M, dtype=complex)
+    complex_second_signal = np.zeros(M, dtype=complex)
+    for i in range(M):
+        complex_first_signal[i] = cmath.rect(signal1_dft.indices[i], signal1_dft.samples[i])
+        complex_second_signal[i] = cmath.rect(signal2_dft.indices[i], signal2_dft.samples[i])
+
     # Multiply harmonics in the frequency domain
+    product_result = complex_first_signal * complex_second_signal
+
+    amp = []
+    shift = []
+    for i in range(M):
+        shift.append(np.angle(product_result[i]))
+        amp.append(math.sqrt((product_result[i].real ** 2) + (product_result[i].imag ** 2)))
+
     product_dft = Signal()
-    product_dft.store_signal(1, 0, M, np.array(range(0, M, 1)),sig2.samples)
-
-    # Make sure that the arrays have the same length by appending zeros if necessary
-    if len(signal1_dft.samples) < len(signal2_dft.samples):
-        signal1_dft.samples = np.append(signal1_dft.samples, np.zeros(len(signal2_dft.samples) - len(signal1_dft.samples)))
-    elif len(signal2_dft.samples) < len(signal1_dft.samples):
-        signal2_dft.samples = np.append(signal2_dft.samples, np.zeros(len(signal1_dft.samples) - len(signal2_dft.samples)))
-
-    product_dft.samples = np.array(signal1_dft.samples) * np.array(signal2_dft.samples)
+    product_dft.store_signal(1, 0, M, amp, shift)
 
     # Perform IDFT on the product signal
     product_signal = idft(product_dft)
 
-    print(product_signal.samples)
+    print(conv_indices)
+    print(np.round(product_signal.samples, 1))
+    ConvTest(conv_indices, product_signal.samples)
